@@ -10,9 +10,7 @@ const Nav = ({getTimeZone}) => {
     window.addEventListener('resize', handleWindowResize, false);
   }, []);
 
-  const handleWindowResize = () => {
-    setIsMobile(window.innerWidth < 700);
-  }
+  const handleWindowResize = () => setIsMobile(window.innerWidth < 700);
   
   const displayBorder = (index, label) => {
     getTimeZone(label);
@@ -36,14 +34,17 @@ const Nav = ({getTimeZone}) => {
         cityNames[i].onmouseover = () => cityNames[i].style.color = 'black'
         cityNames[i].onmouseout = () => cityNames[i].style.color = 'black';
         
-        borderDiv.animate(animationProp,
-        {duration: 500, iteration: 1, fill: 'forwards'});
+        borderDiv.animate(animationProp, {duration: 500, iteration: 1, fill: 'forwards'});
 
       } else {
         if(cityNames[i].nextSibling) cityNames[i].nextSibling.remove();
-        cityNames[i].style.color = 'rgba(128, 128, 128, 0.5)';
+        cityNames[i].style.color = 'gray';
+        cityNames[i].style.opacity = '0.5';
         cityNames[i].onmouseover = () => cityNames[i].style.color = 'skyblue';
-        cityNames[i].onmouseout = () => cityNames[i].style.color = 'rgba(128, 128, 128, 0.5)';
+        cityNames[i].onmouseout = () => {
+          cityNames[i].style.color = 'gray';
+          cityNames[i].style.opacity = '0.5';
+        };
       }
     }
     setPrevPosition(currentPosition.left);
@@ -53,7 +54,7 @@ const Nav = ({getTimeZone}) => {
     <ul className='cityList' data-testid='cityList'>
       {data.cities.map((city, index) => 
         <div key={index} className= 'cityDiv'
-            onClick = {() => {displayBorder(index, city.label)}}>
+             onClick = {() => {displayBorder(index, city.label)}}>
           <li className='cityName'>{city.label}</li>
         </div>)
       }
