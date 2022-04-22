@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Nav from './components/Nav/Nav';
+import cityTimeZones from 'city-timezones';
 
 function App() {
+  const [city, setCity] = useState('');
+  const [cityTime, setCityTime] = useState('');
+  let d = new Date();
+
+  const getTimeZone = (cityName) => {
+    setCity(cityName);
+    let cityLookup = cityTimeZones.lookupViaCity(cityName);
+    if(cityLookup.length > 0){
+      let localTime = d.toLocaleString('en-US', {
+        timeZone: cityLookup[0].timezone,
+        dateStyle: 'full',
+        timeStyle: 'full',
+      });
+      setCityTime(`Local time: ${localTime}`);
+    } else {
+      setCityTime("Local time is not available!");
+    }
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav getTimeZone={getTimeZone}/>
+      {city? <h2 id='cityHeading'>{city}</h2>: ''}
+      {cityTime? <p className='timeDisplay'>{cityTime}</p>: ''}
     </div>
   );
 }

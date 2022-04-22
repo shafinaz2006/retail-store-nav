@@ -1,0 +1,25 @@
+.cityList{
+  display: flex;
+  font-size: 1.25rem;
+  list-style-type: none;
+  justify-content: space-around;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+.cityName{
+  color: gray;
+  opacity: 0.5;
+  padding-bottom: 0.5rem;
+}
+.cityName:hover{
+  cursor: pointer;
+  color: skyblue;
+}
+
+@media only screen and (max-width: 700px) { 
+
+  .cityList{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
